@@ -3,62 +3,82 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Returns a list with all users
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function getUsers(Request $request)
+    {
+        try {
+            
+            $users = User::all();
+            return response()->json($users);
+        
+        } catch (\Exception $e) {
+        
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+
+        }
+    }
+
+    /**
+     * Creates a new user
+     *
+     * @param Request $request Request with user data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function insertUser(Request $request)
+    {
+
+        try {
+
+            $user = new User();
+            $user->name = $request->name;
+            $user->telephone = $request->telephone;
+            $user->email = $request->email;
+            $user->save();
+            return response()->json($user);
+
+        } catch (\Exception $e) {
+        
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+
+        }
+    }
+
+    /**
+     * Deletes a user
+     *
+     * @param Request $request Request with user id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteUser(Request $request)
     {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Updates an existing user
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request Request with user data and user id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function updateUpdateUser(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        
     }
 }

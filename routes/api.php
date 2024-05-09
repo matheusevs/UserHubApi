@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/getUsers", "App\Http\Controllers\UserController@getUsers");
-Route::post("/insertUser", "App\Http\Controllers\UserController@insertUser");
-Route::delete("/deleteUser", "App\Http\Controllers\UserController@deleteUser");
-Route::put("/updateUser", "App\Http\Controllers\UserController@updateUpdateUser");
+Route::get('/getUsers', [UserController::class, 'getUsers']);
+Route::post('/insertUser', [UserController::class, 'insertUser']);
+Route::delete('/deleteUser', [UserController::class, 'deleteUser']);
+Route::put('/updateUser', [UserController::class, 'updateUpdateUser']);
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
