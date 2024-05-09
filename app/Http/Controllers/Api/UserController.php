@@ -54,7 +54,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
-            ]);
+            ], 500);
 
         }
     }
@@ -80,7 +80,7 @@ class UserController extends Controller
                 return response()->json([
                     'error' => true,
                     'message' => 'Usuário não encontrado',
-                ]);
+                ], 404);
 
             }
 
@@ -89,7 +89,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
-            ]);
+            ], 500);
 
         }
     }
