@@ -36,11 +36,10 @@ class UserController extends Controller
      * Creates a new user
      *
      * @param Request $request Request with user data
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse New user data
      */
     public function insertUser(Request $request)
     {
-
         try {
 
             $user = new User();
@@ -51,7 +50,7 @@ class UserController extends Controller
             return response()->json($user);
 
         } catch (Exception $e) {
-        
+            
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
@@ -62,13 +61,12 @@ class UserController extends Controller
 
     /**
      * Deletes a user
-     *
-     * @param Request $request Request with user id
-     * @return \Illuminate\Http\JsonResponse
+     * 
+     * @param int $id User id
+     * @return \Illuminate\Http\JsonResponse Deleted user data or error message
      */
     public function deleteUser($id)
     {
-
         try {
 
             if ($id && is_numeric($id)) {
@@ -81,7 +79,7 @@ class UserController extends Controller
 
                 return response()->json([
                     'error' => true,
-                    'message' => 'Usuário não encontrado',
+                    'message' => 'Usuário não encontrado',
                 ]);
 
             }
@@ -94,17 +92,34 @@ class UserController extends Controller
             ]);
 
         }
-
     }
 
-    /**
-     * Updates an existing user
-     *
-     * @param Request $request Request with user data and user id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function updateUpdateUser(Request $request)
+    public function updateUser(Request $request, $id)
     {
+        try {
+
+            if ($id && is_numeric($id)) {
+
+                $user = User::find($id);
+                if ($user) {
+                    $user->update($request->all());
+                    return response()->json($user);
+                } 
+
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Usuário não encontrado',
+                ]);
+
+            }
+
+        } catch (Exception $e) {
         
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+
+        }
     }
 }
