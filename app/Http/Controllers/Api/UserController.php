@@ -22,7 +22,7 @@ class UserController extends Controller
             $users = User::all();
             return response()->json($users);
         
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         
             return response()->json([
                 'error' => true,
@@ -50,7 +50,7 @@ class UserController extends Controller
             $user->save();
             return response()->json($user);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         
             return response()->json([
                 'error' => true,
@@ -66,9 +66,35 @@ class UserController extends Controller
      * @param Request $request Request with user id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteUser(Request $request)
+    public function deleteUser($id)
     {
-        //
+
+        try {
+
+            if ($id && is_numeric($id)) {
+
+                $user = User::find($id);
+                if ($user) {
+                    $user->delete();
+                    return response()->json($user);
+                } 
+
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Usuário não encontrado',
+                ]);
+
+            }
+
+        } catch (Exception $e) {
+        
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+
+        }
+
     }
 
     /**

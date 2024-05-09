@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\UserController;
 
 Route::get('/getUsers', [UserController::class, 'getUsers']);
 Route::post('/insertUser', [UserController::class, 'insertUser']);
-Route::delete('/deleteUser', [UserController::class, 'deleteUser']);
+Route::delete('/deleteUser/{id}', [UserController::class, 'deleteUser']);
 Route::put('/updateUser', [UserController::class, 'updateUpdateUser']);
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
