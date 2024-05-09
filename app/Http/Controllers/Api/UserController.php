@@ -94,6 +94,13 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Updates a user
+     * 
+     * @param Request $request Request with user data
+     * @param int $id User id
+     * @return \Illuminate\Http\JsonResponse Updated user data or error message
+     */
     public function updateUser(Request $request, $id)
     {
         try {
@@ -109,7 +116,7 @@ class UserController extends Controller
                 return response()->json([
                     'error' => true,
                     'message' => 'Usuário não encontrado',
-                ]);
+                ], 404);
 
             }
 
@@ -118,8 +125,9 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
-            ]);
+            ], 500);
 
         }
     }
+
 }
