@@ -15,7 +15,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getUsers(Request $request)
+    public function get(Request $request)
     {
         try {
             
@@ -38,11 +38,20 @@ class UserController extends Controller
      * @param Request $request Request with user data
      * @return \Illuminate\Http\JsonResponse New user data
      */
-    public function insertUser(Request $request)
+    public function create(Request $request)
     {
         try {
 
             $user = new User();
+            $userExists = $user::where('email', $request->email)->exists();
+            
+            if ($userExists) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Email ja existe',
+                ], 409);
+            }
+            
             $user->name = $request->name;
             $user->telephone = $request->telephone;
             $user->email = $request->email;
@@ -65,7 +74,7 @@ class UserController extends Controller
      * @param int $id User id
      * @return \Illuminate\Http\JsonResponse Deleted user data or error message
      */
-    public function deleteUser($id)
+    public function delete($id)
     {
         try {
 
@@ -101,7 +110,7 @@ class UserController extends Controller
      * @param int $id User id
      * @return \Illuminate\Http\JsonResponse Updated user data or error message
      */
-    public function updateUser(Request $request, $id)
+    public function update(Request $request, $id)
     {
         try {
 

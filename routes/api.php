@@ -15,10 +15,10 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-Route::get('/getUsers', [UserController::class, 'getUsers']);
-Route::post('/insertUser', [UserController::class, 'insertUser']);
-Route::delete('/deleteUser/{id}', [UserController::class, 'deleteUser']);
-Route::put('/updateUser/{id}', [UserController::class, 'updateUser']);
+Route::get('/getUsers', [UserController::class, 'get']);
+Route::post('/createUser', [UserController::class, 'create']);
+Route::delete('/deleteUser/{id}', [UserController::class, 'delete']);
+Route::put('/updateUser/{id}', [UserController::class, 'update']);
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
