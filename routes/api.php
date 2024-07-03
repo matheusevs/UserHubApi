@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\UserController;
 */
 
 Route::get('/getUsers', [UserController::class, 'get']);
+Route::get('/editUser/{id}', [UserController::class, 'edit']);
 Route::post('/createUser', [UserController::class, 'create']);
 Route::delete('/deleteUser/{id}', [UserController::class, 'delete']);
 Route::put('/updateUser/{id}', [UserController::class, 'update']);

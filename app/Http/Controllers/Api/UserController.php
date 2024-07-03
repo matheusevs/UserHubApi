@@ -27,7 +27,7 @@ class UserController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
-            ]);
+            ], 500);
 
         }
     }
@@ -69,6 +69,44 @@ class UserController extends Controller
     }
 
     /**
+     * Retrieves a user by ID
+     *
+     * @param int $id User ID
+     * @return \Illuminate\Http\JsonResponse User data or error message
+     */
+    public function edit($id)
+    {
+        try {
+
+            if ($id && is_numeric($id)) {
+
+                $user = User::find($id);
+                if ($user) {
+                    return response()->json($user);
+                }
+
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Usuário não encontrado',
+                ], 404);
+            }
+
+            return response()->json([
+                'error' => true,
+                'message' => 'ID inválido',
+            ], 400);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
+            
+        }
+    }
+
+    /**
      * Deletes a user
      * 
      * @param int $id User id
@@ -92,6 +130,11 @@ class UserController extends Controller
                 ], 404);
 
             }
+
+            return response()->json([
+                'error' => true,
+                'message' => 'ID inválido',
+            ], 400);
 
         } catch (Exception $e) {
         
@@ -128,6 +171,11 @@ class UserController extends Controller
                 ], 404);
 
             }
+
+            return response()->json([
+                'error' => true,
+                'message' => 'ID inválido',
+            ], 400);
 
         } catch (Exception $e) {
         
